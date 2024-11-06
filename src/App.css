@@ -10,6 +10,12 @@ body {
   background: linear-gradient(to right, #867070eb, #8a60fdc9);
 }
 
+.title {
+  text-shadow: 0px 2px 5px rebeccapurple;
+  text-align: center;
+}
+
+
 .form {
   background: linear-gradient(to right, #37333fd9, #1d0b44);
   box-shadow: 0px 5px 22px f8f8ff6e;
