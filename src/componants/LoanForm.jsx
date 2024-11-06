@@ -10,6 +10,11 @@ export default function LoanForm() {
     salary: ""
   });
 
+  function handleSubmit() {
+    alert(77777)
+  }
+  const isDisabled = !inputs.name || !inputs.age || !inputs.phoneNumber;
+
   return (
     <div className='d-flex justify-content-center align-items-center vh-100' style={{}}>
       <form
@@ -72,9 +77,17 @@ export default function LoanForm() {
           </select>
         </div>
 
-        <button type="submit" className="btn btn-light w-100">
-          Submit
-        </button>
+        <div className='d-flex justify-content-center align-items-center'>
+          <button
+            disabled={isDisabled}
+            style={{
+              background: isDisabled ? 'gray' : '#ff6ac0',
+              color: isDisabled ? 'black' : '#0000cdd6'
+            }}
+            onClick={handleSubmit} type="submit" className="btn btn-light">
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );

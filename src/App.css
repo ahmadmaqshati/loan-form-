@@ -11,7 +11,7 @@ body {
 }
 
 .form {
-  background: linear-gradient(to right, #37333f8a, #5d468cd1);
+  background: linear-gradient(to right, #37333fd9, #1d0b44);
   box-shadow: 0px 5px 22px f8f8ff6e;
 }
 
@@ -24,9 +24,10 @@ body {
 }
 
 .btn {
-  color: #0000cdd6 !important;
+  /* color: #0000cdd6 !important; */
   font-weight: bold !important;
   font-size: 1.1rem !important;
   letter-spacing: 0px !important;
   text-shadow: 0 5px 10px #00008b5c;
+
 }
