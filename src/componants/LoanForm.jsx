@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 export default function LoanForm() {
   const [inputs, setInputs] = useState({
     name: '',
@@ -9,6 +10,15 @@ export default function LoanForm() {
     isEmployee: false,
     salary: ""
   });
+
+  const [isModalOpen, setIsModal] = useState(false)
+  const handleClose = () => {
+    setIsModal(false)
+  }
+  const handleOpen = () => {
+    setIsModal(true)
+  }
+
 
   function handleChangingInputs(e) {
     const { name, value, type, checked } = e.target;
@@ -20,9 +30,15 @@ export default function LoanForm() {
 
 
   function handleSubmit() {
-    alert(77777)
+    handleOpen()
   }
-  const isDisabled = !inputs.name || !inputs.age || !inputs.phoneNumber;
+
+  function btnIsDisabled() {
+    return (!inputs.name || !inputs.age || !inputs.phoneNumber)
+  }
+
+
+
 
   return (
     <div className='d-flex justify-content-center align-items-center vh-100' style={{}}>
@@ -99,16 +115,33 @@ export default function LoanForm() {
         {/* Submit button */}
         <div className='d-flex justify-content-center align-items-center'>
           <button
-            disabled={isDisabled}
+            disabled={btnIsDisabled()}
             style={{
-              background: isDisabled ? 'gray' : '#ff6ac0',
-              color: isDisabled ? 'black' : '#0000cdd6'
+              background: btnIsDisabled() ? 'gray' : '#ff6ac0',
+              color: btnIsDisabled() ? 'black' : '#0000cdd6'
             }}
             onClick={handleSubmit} type="submit" className="btn btn-light">
             Submit
           </button>
         </div>
       </form>
+
+
+      {/* modal */}
+      <div>
+        <Modal show={isModalOpen}
+          onHide={handleClose}
+          dialogClassName="modal-centered"
+          style={{ paddingLeft: "0" }}
+        >
+
+          <Modal.Body className="message">
+            The Form Has Been Submitted Successfully
+          </Modal.Body>
+
+        </Modal>
+      </div>
+
     </div>
   );
 }

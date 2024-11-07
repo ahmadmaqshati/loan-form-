@@ -35,5 +35,41 @@ body {
   font-size: 1.1rem !important;
   letter-spacing: 0px !important;
   text-shadow: 0 5px 10px #00008b5c;
+}
+
+.modal-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  /* يغطي ارتفاع الشاشة بالكامل */
+}
+
+h5 {
+  width: 100vh;
+}
+
+.modal-dialog {
+  max-width: none !important;
 
 }
+
+.modal-content {
+  width: 92% !important;
+  border-radius: 0px !important;
+}
+
+.modal-dialog {
+  margin: 0 !important;
+}
+
+.message {
+  color: #026E0B;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* .modal-backdrop {
+  background-color: black !important
+} */
