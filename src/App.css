@@ -73,3 +73,10 @@ h5 {
 /* .modal-backdrop {
   background-color: black !important
 } */
+
+/*   // تحقق من جميع الحقول
+    if (!name || !phoneNumber || !age || !formInputs.salary) {
+      setErrorMessage('All fields are required');
+      handleOpenModal()
+
+    } */

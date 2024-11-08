@@ -2,8 +2,6 @@ import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FormModal from './FormModal';
 
-/* import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button'; */
 export default function LoanForm() {
   const [formInputs, setFormInputs] = useState({
     name: '',
@@ -14,7 +12,7 @@ export default function LoanForm() {
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [messageType, setMessageType] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleCloseModal = () => {
     setIsModalOpen(false)
@@ -31,19 +29,35 @@ export default function LoanForm() {
       [name]: type === 'checkbox' ? checked : value
     }));
   }
-  // Function to validate the phone number
-  const validatePhoneNumber = (phoneNumber) => phoneNumber.length > 9
 
-  //Assign Function to Selected Varible
-  const isPhoneNumberValdate = validatePhoneNumber(formInputs.phoneNumber)
 
   // Handle form submission
   const handleSubmit = () => {
-    setMessageType(isPhoneNumberValdate
-      ? "The Form Has Been Submitted Successfully"
-      : "Phone number must be longer than 9 digits")
-    handleOpenModal()
+    setErrorMessage('');
+    const { phoneNumber, age, name, salary, isEmployee } = formInputs;
+
+    // Check required fields
+    if (!name || !phoneNumber || !age || !salary || !isEmployee) {
+      setErrorMessage('All fields are required!');
+      return;
+    }
+
+    // Check phone number validity
+    if (phoneNumber.length < 10) {
+      setErrorMessage('Phone Number Format Is Incorrect');
+      return;
+    }
+
+    // Check age
+    if (age < 20 || age > 50) {
+      setErrorMessage('The age is not allowed');
+      return;
+    }
+
+    // If all inputs are valid, open modal without setting error message
+    handleOpenModal();
   };
+
 
 
 
@@ -117,6 +131,7 @@ export default function LoanForm() {
             className="form-select"
             value={formInputs.salary}
             onChange={handleChangingInputs}
+            name="salary"
           >
             <option>Less than 500$</option>
             <option>between 500$ and 2000$</option>
@@ -139,7 +154,7 @@ export default function LoanForm() {
       </form>
 
       <FormModal isModalOpen={isModalOpen} handleCloseModal={handleCloseModal}
-        messageType={messageType} isPhoneNumberValdate={isPhoneNumberValdate}
+        errorMessage={errorMessage}
       />
 
     </div>
