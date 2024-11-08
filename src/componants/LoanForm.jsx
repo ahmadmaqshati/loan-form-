@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import FormModal from './FormModal';
+
+/* import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button'; */
 export default function LoanForm() {
-  const [inputs, setInputs] = useState({
+  const [formInputs, setFormInputs] = useState({
     name: '',
     phoneNumber: '',
     age: "",
@@ -11,18 +13,18 @@ export default function LoanForm() {
     salary: ""
   });
 
-  const [isModalOpen, setIsModal] = useState(false)
-  const handleClose = () => {
-    setIsModal(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
   }
-  const handleOpen = () => {
-    setIsModal(true)
+  const handleOpenModal = () => {
+    setIsModalOpen(true)
   }
 
 
   function handleChangingInputs(e) {
     const { name, value, type, checked } = e.target;
-    setInputs(prevInputs => ({
+    setFormInputs(prevInputs => ({
       ...prevInputs,
       [name]: type === 'checkbox' ? checked : value
     }));
@@ -30,18 +32,15 @@ export default function LoanForm() {
 
 
   function handleSubmit() {
-    handleOpen()
+    handleOpenModal()
   }
 
-  function btnIsDisabled() {
-    return (!inputs.name || !inputs.age || !inputs.phoneNumber)
+  function isSubmitDisabled() {
+    return (!formInputs.name || !formInputs.age || !formInputs.phoneNumber)
   }
-
-
-
 
   return (
-    <div className='d-flex justify-content-center align-items-center vh-100' style={{}}>
+    <div className='d-flex justify-content-center align-items-center vh-100'>
 
       <form
         onSubmit={(e) => {
@@ -58,7 +57,7 @@ export default function LoanForm() {
           <label className="form-label">Name:</label>
           <input
             className="form-control"
-            value={inputs.name}
+            value={formInputs.name}
             onChange={handleChangingInputs}
             name="name"
           />
@@ -69,7 +68,7 @@ export default function LoanForm() {
           <label className="form-label">Phone Number:</label>
           <input
             className="form-control"
-            value={inputs.phoneNumber}
+            value={formInputs.phoneNumber}
             onChange={handleChangingInputs}
             name="phoneNumber"
           />
@@ -80,7 +79,7 @@ export default function LoanForm() {
           <label className="form-label">Age:</label>
           <input
             className="form-control"
-            value={inputs.age}
+            value={formInputs.age}
             onChange={handleChangingInputs}
             name="age"
           />
@@ -91,7 +90,7 @@ export default function LoanForm() {
           <input
             className="form-check-input"
             type="checkbox"
-            checked={inputs.isEmployee}
+            checked={formInputs.isEmployee}
             onChange={handleChangingInputs}
             name="isEmployee"
           />
@@ -103,7 +102,7 @@ export default function LoanForm() {
           <label className="form-label">Salary</label>
           <select
             className="form-select"
-            value={inputs.salary}
+            value={formInputs.salary}
             onChange={handleChangingInputs}
           >
             <option>Less than 500$</option>
@@ -115,10 +114,10 @@ export default function LoanForm() {
         {/* Submit button */}
         <div className='d-flex justify-content-center align-items-center'>
           <button
-            disabled={btnIsDisabled()}
+            disabled={isSubmitDisabled()}
             style={{
-              background: btnIsDisabled() ? 'gray' : '#ff6ac0',
-              color: btnIsDisabled() ? 'black' : '#0000cdd6'
+              background: isSubmitDisabled() ? 'gray' : '#ff6ac0',
+              color: isSubmitDisabled() ? 'black' : '#0000cdd6'
             }}
             onClick={handleSubmit} type="submit" className="btn btn-light">
             Submit
@@ -126,21 +125,7 @@ export default function LoanForm() {
         </div>
       </form>
 
-
-      {/* modal */}
-      <div>
-        <Modal show={isModalOpen}
-          onHide={handleClose}
-          dialogClassName="modal-centered"
-          style={{ paddingLeft: "0" }}
-        >
-
-          <Modal.Body className="message">
-            The Form Has Been Submitted Successfully
-          </Modal.Body>
-
-        </Modal>
-      </div>
+      <FormModal isModalOpen={isModalOpen} handleCloseModal={handleCloseModal} />
 
     </div>
   );
