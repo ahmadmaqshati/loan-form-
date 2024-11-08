@@ -14,6 +14,8 @@ export default function LoanForm() {
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [messageType, setMessageType] = useState('');
+
   const handleCloseModal = () => {
     setIsModalOpen(false)
   }
@@ -29,15 +31,24 @@ export default function LoanForm() {
       [name]: type === 'checkbox' ? checked : value
     }));
   }
-  let messageType = ''
-  if (formInputs.phoneNumber.length <= 9) {
-    messageType = 'error'
-  } else {
-    messageType = "The Form Has Been Submitted Successfully"
-  }
-  function handleSubmit() {
-    handleOpenModal()
-  }
+  // Function to validate the phone number
+  const validatePhoneNumber = (phoneNumber) => {
+    return phoneNumber.length > 9;
+  };
+  //Assign Function to Selected Varible
+  const isPhoneNumberValdate = validatePhoneNumber(formInputs.phoneNumber)
+
+  // Handle form submission
+  const handleSubmit = () => {
+    if (isPhoneNumberValdate) {
+      handleOpenModal();
+      setMessageType('The Form Has Been Submitted Successfully');
+    } else {
+      setMessageType('Phone number must be longer than 9 digits.');
+      handleOpenModal();
+    }
+  };
+
 
   function isSubmitDisabled() {
     return (!formInputs.name || !formInputs.age || !formInputs.phoneNumber)
@@ -130,7 +141,7 @@ export default function LoanForm() {
       </form>
 
       <FormModal isModalOpen={isModalOpen} handleCloseModal={handleCloseModal}
-        messageType={messageType}
+        messageType={messageType} isPhoneNumberValdate={isPhoneNumberValdate}
       />
 
     </div>

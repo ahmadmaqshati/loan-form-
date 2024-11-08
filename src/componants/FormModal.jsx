@@ -1,6 +1,6 @@
 import Modal from 'react-bootstrap/Modal';
 
-export default function FormModal({ isModalOpen, handleCloseModal, messageType }) {
+export default function FormModal({ isModalOpen, handleCloseModal, messageType, isPhoneNumberValdate }) {
 
     return (
 
@@ -11,7 +11,7 @@ export default function FormModal({ isModalOpen, handleCloseModal, messageType }
         >
 
             <Modal.Body className="message"
-                style={{ color: messageType == 'error' ? 'red' : 'green' }}
+                style={{ color: isPhoneNumberValdate ? 'green' : 'red' }}
             >
                 {messageType}
             </Modal.Body>
