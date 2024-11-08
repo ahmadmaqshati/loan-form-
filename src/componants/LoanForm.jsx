@@ -29,8 +29,12 @@ export default function LoanForm() {
       [name]: type === 'checkbox' ? checked : value
     }));
   }
-
-
+  let messageType = ''
+  if (formInputs.phoneNumber.length <= 9) {
+    messageType = 'error'
+  } else {
+    messageType = "The Form Has Been Submitted Successfully"
+  }
   function handleSubmit() {
     handleOpenModal()
   }
@@ -125,7 +129,9 @@ export default function LoanForm() {
         </div>
       </form>
 
-      <FormModal isModalOpen={isModalOpen} handleCloseModal={handleCloseModal} />
+      <FormModal isModalOpen={isModalOpen} handleCloseModal={handleCloseModal}
+        messageType={messageType}
+      />
 
     </div>
   );
