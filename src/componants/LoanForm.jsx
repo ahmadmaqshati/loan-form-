@@ -32,22 +32,20 @@ export default function LoanForm() {
     }));
   }
   // Function to validate the phone number
-  const validatePhoneNumber = (phoneNumber) => {
-    return phoneNumber.length > 9;
-  };
+  const validatePhoneNumber = (phoneNumber) => phoneNumber.length > 9
+
   //Assign Function to Selected Varible
   const isPhoneNumberValdate = validatePhoneNumber(formInputs.phoneNumber)
 
   // Handle form submission
   const handleSubmit = () => {
-    if (isPhoneNumberValdate) {
-      handleOpenModal();
-      setMessageType('The Form Has Been Submitted Successfully');
-    } else {
-      setMessageType('Phone number must be longer than 9 digits.');
-      handleOpenModal();
-    }
+    setMessageType(isPhoneNumberValdate
+      ? "The Form Has Been Submitted Successfully"
+      : "Phone number must be longer than 9 digits")
+    handleOpenModal()
   };
+
+
 
 
   function isSubmitDisabled() {
