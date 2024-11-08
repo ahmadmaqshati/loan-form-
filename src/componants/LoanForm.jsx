@@ -36,22 +36,29 @@ export default function LoanForm() {
     setErrorMessage('');
     const { phoneNumber, age, name, salary, isEmployee } = formInputs;
 
+    let error = ''
+
     // Check required fields
     if (!name || !phoneNumber || !age || !salary || !isEmployee) {
-      setErrorMessage('All fields are required!');
-      return;
+      error = 'All fields are required!'
     }
 
     // Check phone number validity
-    if (phoneNumber.length < 10) {
-      setErrorMessage('Phone Number Format Is Incorrect');
-      return;
+    else if (phoneNumber.length < 10) {
+      error = 'Phone Number Format Is Incorrect'
     }
 
     // Check age
-    if (age < 20 || age > 50) {
-      setErrorMessage('The age is not allowed');
-      return;
+    else if (age < 20 || age > 50) {
+      error = 'The age is not allowed'
+      console.log('age');
+    }
+
+    // If there's an error, set the error message and open the modal
+    if (error) {
+      setErrorMessage(error)
+      handleOpenModal()
+      return
     }
 
     // If all inputs are valid, open modal without setting error message
