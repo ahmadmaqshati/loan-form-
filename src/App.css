@@ -70,13 +70,11 @@ h5 {
   font-weight: 700;
 }
 
-/* .modal-backdrop {
-  background-color: black !important
-} */
+.form-label {
+  margin-right: 8px;
 
-/*   // تحقق من جميع الحقول
-    if (!name || !phoneNumber || !age || !formInputs.salary) {
-      setErrorMessage('All fields are required');
-      handleOpenModal()
+}
 
-    } */
+.form-check-input {
+  margin-top: 5px !important;
+}

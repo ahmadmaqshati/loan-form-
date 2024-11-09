@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FormModal from './FormModal';
+import MyInput from './MyInput';
 
 export default function LoanForm() {
   const [formInputs, setFormInputs] = useState({
@@ -30,8 +31,7 @@ export default function LoanForm() {
     }));
   }
 
-
-  // Handle form submission
+  //======= Handle form submission======//
   const handleSubmit = () => {
     setErrorMessage('');
     const { phoneNumber, age, name, salary, isEmployee } = formInputs;
@@ -43,13 +43,14 @@ export default function LoanForm() {
       error = 'All fields are required!'
     }
 
-    // Check phone number validity
-    else if (phoneNumber.length < 10) {
+    // Check phone number validity 
+    else if (isNaN(phoneNumber) || phoneNumber.length < 10) {
       error = 'Phone Number Format Is Incorrect'
     }
 
+
     // Check age
-    else if (age < 20 || age > 50) {
+    else if (isNaN(age) || age < 20 || age > 50) {
       error = 'The age is not allowed'
       console.log('age');
     }
@@ -65,86 +66,88 @@ export default function LoanForm() {
     handleOpenModal();
   };
 
-
-
-
-
   function isSubmitDisabled() {
     return (!formInputs.name || !formInputs.age || !formInputs.phoneNumber)
+  }
+
+
+  function handlePhoneInputChange(value) {
+    setFormInputs({ ...formInputs, phoneNumber: value })
+  }
+
+  function handleAgeInputChange(value) {
+    setFormInputs({ ...formInputs, age: value })
+  }
+
+  function handleNameInputChange(value) {
+    setFormInputs({ ...formInputs, name: value })
+  }
+
+  function handleEmployeeInputChange(value) {
+    setFormInputs({ ...formInputs, isEmployee: value })
   }
 
   return (
     <div className='d-flex justify-content-center align-items-center vh-100'>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
+      <form onSubmit={(e) => {
+        e.preventDefault()
+      }}
         className='form text-white p-4 rounded'
         // Set the display to 90% and specify a maximum limit"
-        style={{ maxWidth: '700px', width: '90%' }}
-      >
+        style={{ maxWidth: '700px', width: '90%' }} >
+
         <h1 className='title'>Requesting a loan</h1>
 
-        {/* Name field */}
-        <div className="mb-3">
-          <label className="form-label">Name:</label>
-          <input
-            className="form-control"
-            value={formInputs.name}
-            onChange={handleChangingInputs}
-            name="name"
-          />
-        </div>
+        {/* UserName field */}
+        <MyInput value={formInputs.name}
+          handleChange={handleNameInputChange}
+          inputTitle='Name:'
+          inputName='name'
+        />
 
         {/* Phone number field */}
-        <div className="mb-3">
-          <label className="form-label">Phone Number:</label>
-          <input
-            className="form-control"
-            value={formInputs.phoneNumber}
-            onChange={handleChangingInputs}
-            name="phoneNumber"
-          />
-        </div>
+        <MyInput value={formInputs.phoneNumber}
+          handleChange={handlePhoneInputChange}
+          inputTitle='Phone Number:'
+          inputName='phoneNumber'
+        />
 
         {/* Age field */}
-        <div className="mb-3">
-          <label className="form-label">Age:</label>
-          <input
-            className="form-control"
-            value={formInputs.age}
-            onChange={handleChangingInputs}
-            name="age"
-          />
-        </div>
+        <MyInput value={formInputs.age}
+          handleChange={handleAgeInputChange}
+          inputTitle='Age:'
+          inputName='age'
+        />
 
         {/* Checkbox field for employee status */}
-        <div className="mb-3 form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            checked={formInputs.isEmployee}
-            onChange={handleChangingInputs}
-            name="isEmployee"
-          />
-          <label className="form-check-label">Are you an employee?</label>
-        </div>
+        <MyInput
+          type='checkbox'
+          value={formInputs.isEmployee}
+          handleChange={handleEmployeeInputChange}
+          inputTitle='Are you an employee:'
+          inputName='isEmployee'
+        />
 
         {/* Salary selection field */}
-        <div className="mb-3">
-          <label className="form-label">Salary</label>
-          <select
-            className="form-select"
-            value={formInputs.salary}
-            onChange={handleChangingInputs}
-            name="salary"
-          >
-            <option>Less than 500$</option>
-            <option>between 500$ and 2000$</option>
-            <option>above 2000$</option>
-          </select>
-        </div>
+        <MyInput
+          type="select"
+          value={formInputs.salary}
+          handleChange={(value) => setFormInputs({ ...formInputs, salary: value })}
+          inputTitle="Salary:"
+          inputName="salary"
+          options={[
+            { value: 'lessThan500', label: 'Less than 500$' },
+            { value: 'between500and2000', label: 'Between 500$ and 2000$' },
+            { value: 'above2000', label: 'Above 2000$' }
+          ]}
+        />
+
+
+
+
+
+
 
         {/* Submit button */}
         <div className='d-flex justify-content-center align-items-center'>
@@ -161,8 +164,7 @@ export default function LoanForm() {
       </form>
 
       <FormModal isModalOpen={isModalOpen} handleCloseModal={handleCloseModal}
-        errorMessage={errorMessage}
-      />
+        errorMessage={errorMessage} />
 
     </div>
   );
